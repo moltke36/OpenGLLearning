@@ -1,6 +1,10 @@
 #pragma once
 #include "ogldev_math_3d.h"
 
+#include <string>
+#include <stdio.h>
+#include <iostream>
+
 class PolyMesh
 {
 	struct TriFace
@@ -9,6 +13,9 @@ class PolyMesh
 	};
 
 
+public:
+	bool LoadFromFileObj(const char *filename, bool loadMtl = true, std::ostream *outStream = &std::cout);
+
 protected:
 	Vector3f * v;		//!< vertices
 	TriFace *f;		//!< faces
@@ -16,3 +23,12 @@ protected:
 
 
 };
+
+inline bool PolyMesh::LoadFromFileObj(const char *filename, bool loadMtl, std::ostream *outStream)
+{
+	FILE *FilePath = fopen(filename, "r");
+	if (!FilePath)
+	{
+		std::cout<<
+	}
+}
