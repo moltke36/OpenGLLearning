@@ -11,7 +11,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-
+#pragma once
 #ifndef MATH_3D_H
 #define	MATH_3D_H
 
@@ -28,6 +28,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <assimp/matrix4x4.h>
 
 //#include "ogldev_util.h"
+
+// TODO:高级版初始0化
+//#define CY_MEMCLEAR(type,dest,n) memset(dest,0,(n)*sizeof(type))
 
 #define ToRadian(x) (float)(((x) * M_PI / 180.0f))
 #define ToDegree(x) (float)(((x) * 180.0f / M_PI))
@@ -125,7 +128,7 @@ struct Vector3f
 
 	void Print() const
 	{
-		printf("(%.02f, %.02f, %.02f)", x, y, z);
+		printf("(%.02f, %.02f, %.02f)\n", x, y, z);
 	}
 };
 
@@ -361,6 +364,7 @@ public:
 Quaternion operator*(const Quaternion& l, const Quaternion& r);
 
 Quaternion operator*(const Quaternion& q, const Vector3f& v);
+
 
 #endif	/* MATH_3D_H */
 #pragma once

@@ -287,12 +287,22 @@ inline bool TriMesh::LoadFromFileObj( const char *filename, bool loadMtl, std::o
 			}
 			int i=0;
 			bool inspace = false;
-			while ( i<1024-1 ) {
-				if ( feof(fp) || c=='\n' || c=='\r' || c=='\0' ) break;
-				if ( isspace(c) ) {	// only use a single space as the space character
-					inspace = true;
-				} else {
-					if ( inspace ) data[i++] = ' ';
+			while ( i<1024-1 ) 
+			{
+				if (feof(fp) || c == '\n' || c == '\r' || c == '\0')
+				{
+					break;
+				}
+				if ( isspace(c) ) 
+				{	
+					inspace = true; // only use a single space as the space character
+				}
+				else
+				{
+					if (inspace)
+					{
+						data[i++] = ' ';
+					}
 					inspace = false;
 					data[i++] = c;
 				}
