@@ -52,7 +52,9 @@ public:
 	// Set up Camera
 	void SetCamera(const Camera& camera)
 	{
-		m_camera = camera;
+		m_camera.Pos = camera.GetPos();
+		m_camera.Target = camera.GetTarget();
+		m_camera.Up = camera.GetUp();
 	}
 
 	const Matrix4f* GetTrans();
@@ -63,7 +65,12 @@ private:
 	Vector3f m_rotateInfo;
 	Matrix4f m_transformation;
 	PersProjInfo m_persProj;
-	Camera m_camera;
+	struct
+	{
+		Vector3f Pos;
+		Vector3f Target;
+		Vector3f Up;
+	} m_camera;
 };
 
 inline const Matrix4f* Pipeline::GetTrans()
@@ -74,8 +81,8 @@ inline const Matrix4f* Pipeline::GetTrans()
 	RotateTrans.InitRotateTransform(m_rotateInfo.x, m_rotateInfo.y, m_rotateInfo.z);
 	TranslationTrans.InitTranslationTransform(m_worldPos.x, m_worldPos.y, m_worldPos.z);
 	PersProjTrans.InitPersProjTransform(m_persProj);
-	CameraTranslationTrans.InitTranslationTransform(-m_camera.GetPos().x, -m_camera.GetPos().y, -m_camera.GetPos().z);
-	CameraRotateTrans.InitCameraTransform(m_camera.GetTarget(),m_camera.GetUp());
+	CameraTranslationTrans.InitTranslationTransform(-m_camera.Pos.x, -m_camera.Pos.y, -m_camera.Pos.z);
+	CameraRotateTrans.InitCameraTransform(m_camera.Target,m_camera.Up);
 	m_transformation = PersProjTrans * CameraRotateTrans * CameraTranslationTrans * TranslationTrans * RotateTrans * ScaleTrans;
 	return &m_transformation;
 }
